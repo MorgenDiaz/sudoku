@@ -12,6 +12,20 @@ let puzzle = [
   [3, 2, 8, 1, 9, 6, 5, 4, 7],
 ];
 
+let puzzleCopy = [
+  [8, 9, 5, 7, 4, 2, 1, 3, 6],
+  [2, 7, 1, 9, 6, 3, 4, 8, 5],
+  [4, 6, 3, 5, 8, 1, 7, 9, 2],
+
+  [9, 3, 4, 6, 1, 7, 2, 5, 8],
+  [5, 1, 7, 2, 3, 8, 9, 6, 4],
+  [6, 8, 2, 4, 5, 9, 3, 7, 1],
+
+  [1, 5, 9, 8, 7, 4, 6, 2, 3],
+  [7, 4, 6, 3, 2, 5, 8, 1, 9],
+  [3, 2, 8, 1, 9, 6, 5, 4, 7],
+];
+
 let invalidPuzzle = [
   [8, 9, 5, 7, 4, 2, 1, 3, 6],
   [8, 7, 1, 9, 6, 3, 4, 8, 5],
@@ -107,5 +121,35 @@ function sudokuIsValid(puzzle) {
   );
 }
 
+function isSame(puzzle1, puzzle2) {
+  if (
+    !Array.isArray(puzzle1) ||
+    !Array.isArray(puzzle2) ||
+    puzzle1.length != puzzle2.length
+  ) {
+    return false;
+  }
+
+  for (r = 0; r < puzzle.length; r++) {
+    if (puzzle1[r].length != puzzle2[r].length) {
+      return false;
+    }
+
+    for (c = 0; c < puzzle1[r].length; c++) {
+      let puzzle1CellAtCoords = puzzle1[r][c];
+      let puzzle2CellAtCoords = puzzle2[r][c];
+      if (puzzle1CellAtCoords != puzzle2CellAtCoords) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
 console.log(sudokuIsValid(puzzle));
 console.log(sudokuIsValid(invalidPuzzle));
+
+console.log(isSame(puzzle, puzzleCopy));
+console.log(isSame(puzzle, puzzle));
+console.log(isSame(puzzle, invalidPuzzle));
