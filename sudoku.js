@@ -11,3 +11,11 @@ let puzzle = [
   [7, 4, 6, 3, 2, 5, 8, 1, 9],
   [3, 2, 8, 1, 9, 6, 5, 4, 7],
 ];
+
+function getRow(puzzle, row) {
+  return puzzle[row];
+}
+
+function getColumn(puzzle, column) {
+  return puzzle.slice(0, puzzle.length).map((i) => i[column]);
+}
