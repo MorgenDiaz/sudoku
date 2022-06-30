@@ -12,6 +12,18 @@ let puzzle = [
   [3, 2, 8, 1, 9, 6, 5, 4, 7],
 ];
 
+let invalidPuzzle = [
+  [8, 9, 5, 7, 4, 2, 1, 3, 6],
+  [8, 7, 1, 9, 6, 3, 4, 8, 5],
+  [4, 6, 3, 5, 8, 1, 7, 9, 2],
+  [9, 3, 4, 6, 1, 7, 2, 5, 8],
+  [5, 1, 7, 2, 3, 8, 9, 6, 4],
+  [6, 8, 2, 4, 5, 9, 3, 7, 1],
+  [1, 5, 9, 8, 7, 4, 6, 2, 3],
+  [7, 4, 6, 3, 2, 5, 8, 1, 9],
+  [3, 2, 8, 1, 9, 6, 5, 4, 7],
+];
+
 function getRow(puzzle, row = 0) {
   return puzzle[row];
 }
@@ -49,4 +61,51 @@ function contains1to9(subsection) {
   );
 }
 
-console.log(contains1to9([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+function validateRows(puzzle) {
+  puzzle.forEach((element) => {
+    if (!contains1to9(element)) {
+      return false;
+    }
+  });
+
+  return true;
+}
+
+function validateColumns(puzzle) {
+  let columnCount = puzzle[0].length;
+
+  for (let i = 0; i < columnCount; i++) {
+    if (!contains1to9(getColumn(puzzle, i))) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function validateSubsections(puzzle) {
+  let sectionRows = puzzle.length / 3;
+  let sectionColumns = puzzle[0].length / 3;
+
+  for (let r = 0; r < sectionRows; r += 3) {
+    for (c = 0; c < sectionColumns; c += 3) {
+      let subsection = getSection(puzzle, c, r);
+      if (!contains1to9(subsection)) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+function sudokuIsValid(puzzle) {
+  return (
+    validateRows(puzzle) &&
+    validateColumns(puzzle) &&
+    validateSubsections(puzzle)
+  );
+}
+
+console.log(sudokuIsValid(puzzle));
+console.log(sudokuIsValid(invalidPuzzle));
